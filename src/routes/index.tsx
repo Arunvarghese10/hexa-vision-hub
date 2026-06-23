@@ -89,6 +89,58 @@ function Logo() {
   );
 }
 
+function PillarRow({ p }: { p: Pillar }) {
+  const handleMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
+  };
+  return (
+    <li>
+      <a
+        href={MAIL}
+        onMouseMove={handleMove}
+        className="group relative block overflow-hidden border-b border-hairline py-8 sm:py-10"
+        style={{ ["--mx" as string]: "50%", ["--my" as string]: "50%" }}
+      >
+        {/* cursor spotlight */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{
+            background:
+              "radial-gradient(220px circle at var(--mx) var(--my), oklch(1 0 0 / 0.10), transparent 70%)",
+          }}
+        />
+        <div className="relative grid grid-cols-[auto_1fr_auto] items-center gap-6 sm:gap-10">
+          <span className="font-display text-sm tabular-nums text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:text-base">
+            {p.number}
+          </span>
+          <div className="min-w-0">
+            <h3 className="font-display text-2xl leading-tight tracking-tight text-foreground/80 transition-all duration-500 ease-out group-hover:translate-x-2 group-hover:text-foreground sm:text-4xl md:text-5xl">
+              {p.title}
+            </h3>
+            <p className="mt-2 max-w-2xl truncate text-xs text-muted-foreground sm:text-sm">
+              {p.blurb}
+            </p>
+          </div>
+          <div className="flex items-center gap-4 sm:gap-6">
+            <span className="hidden text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:inline">
+              {p.status}
+            </span>
+            <span
+              aria-hidden
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground group-hover:text-background sm:h-11 sm:w-11"
+            >
+              <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+            </span>
+          </div>
+        </div>
+      </a>
+    </li>
+  );
+}
+
 function Index() {
   return (
     <div id="top" className="min-h-screen bg-background text-foreground">
