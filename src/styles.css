@@ -78,5 +78,14 @@
     font-family: var(--font-display);
     letter-spacing: -0.025em;
     font-weight: 400;
+    /* Fraunces ships stylistic alternates; reset so inherited Inter features
+       don't swap glyphs like the 'f' in "crafted". */
+    font-feature-settings: normal;
+    font-variant-ligatures: common-ligatures;
+  }
+
+  .font-display {
+    font-feature-settings: normal;
+    font-variant-ligatures: common-ligatures;
   }
 }
