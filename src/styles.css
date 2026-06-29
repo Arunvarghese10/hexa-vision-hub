@@ -11,6 +11,7 @@
   --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -34,58 +35,122 @@
 }
 
 :root {
-  --radius: 0.25rem;
-  /* CRED-inspired monochrome: near-black background, soft grey type, white accents */
-  --background: oklch(0.16 0 0);
-  --foreground: oklch(0.97 0 0);
-  --card: oklch(0.19 0 0);
-  --card-foreground: oklch(0.97 0 0);
-  --popover: oklch(0.19 0 0);
-  --popover-foreground: oklch(0.97 0 0);
-  --primary: oklch(0.97 0 0);
-  --primary-foreground: oklch(0.14 0 0);
-  --secondary: oklch(0.22 0 0);
-  --secondary-foreground: oklch(0.97 0 0);
-  --muted: oklch(0.22 0 0);
+  --radius: 0.75rem;
+  --background: oklch(0.13 0 0);
+  --foreground: oklch(0.96 0.005 80);
+  --surface: oklch(0.16 0 0);
+  --card: oklch(0.17 0 0);
+  --card-foreground: oklch(0.96 0.005 80);
+  --popover: oklch(0.17 0 0);
+  --popover-foreground: oklch(0.96 0.005 80);
+  --primary: oklch(0.96 0.005 80);
+  --primary-foreground: oklch(0.13 0 0);
+  --secondary: oklch(0.20 0 0);
+  --secondary-foreground: oklch(0.96 0.005 80);
+  --muted: oklch(0.20 0 0);
   --muted-foreground: oklch(0.62 0 0);
-  --accent: oklch(0.28 0 0);
-  --accent-foreground: oklch(0.97 0 0);
+  --accent: oklch(0.96 0.005 80);
+  --accent-foreground: oklch(0.13 0 0);
   --destructive: oklch(0.55 0.18 27);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(1 0 0 / 10%);
+  --border: oklch(1 0 0 / 8%);
   --input: oklch(1 0 0 / 14%);
   --ring: oklch(0.55 0 0);
   --hairline: oklch(1 0 0 / 10%);
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
-
+  * { border-color: var(--color-border); }
   html, body {
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
-
   body {
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
   }
-
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     letter-spacing: -0.025em;
     font-weight: 400;
-    /* Fraunces ships stylistic alternates; reset so inherited Inter features
-       don't swap glyphs like the 'f' in "crafted". */
-    font-feature-settings: normal;
-    font-variant-ligatures: common-ligatures;
-  }
-
-  .font-display {
     font-feature-settings: normal;
     font-variant-ligatures: common-ligatures;
   }
 }
+
+@utility container-x {
+  @apply mx-auto px-6 md:px-10;
+  max-width: 1240px;
+}
+@utility narrow-x {
+  @apply mx-auto px-6 md:px-10;
+  max-width: 920px;
+}
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  font-feature-settings: normal;
+}
+@utility display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+@utility eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+@utility hairline {
+  display: inline-block;
+  height: 1px;
+  background: var(--color-hairline);
+}
+@utility btn-base {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm transition-all duration-300;
+}
+@utility btn-light {
+  background: var(--color-foreground);
+  color: var(--color-background);
+}
+@utility btn-light:hover { transform: translateY(-1px); }
+@utility btn-ghost {
+  background: transparent;
+  color: var(--color-foreground);
+  border: 1px solid var(--color-hairline);
+}
+@utility btn-ghost:hover { border-color: var(--color-foreground); }
+
+@utility pillar-card {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid var(--color-hairline);
+  background: var(--color-background);
+  transition: border-color 0.4s ease, transform 0.4s ease;
+  overflow: hidden;
+}
+@utility pillar-card:hover {
+  border-color: oklch(1 0 0 / 0.25);
+  transform: translateY(-2px);
+}
+
+@utility spotlight {
+  position: relative;
+  transition: background-color 0.4s ease;
+}
+@utility spotlight:hover {
+  background-color: oklch(1 0 0 / 0.02);
+}
+
+@utility hex-pattern {
+  background-image:
+    radial-gradient(circle at 1px 1px, oklch(1 0 0 / 0.06) 1px, transparent 0);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent 75%);
+}
+
+@utility bg-surface { background-color: var(--color-surface); }
+@utility bg-hairline { background-color: var(--color-hairline); }
