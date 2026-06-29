@@ -1,19 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Hexa Ventures — crafted with intent" },
+      { title: "Hexa Ventures — NDIS & property services across Australia" },
       {
         name: "description",
         content:
-          "Hexa Ventures is a diversified Australian company built on six connected pillars — honest work, clear accountability, long-term commitment.",
+          "Hexa Ventures delivers NDIS support, property maintenance and bond cleaning across Australia — named teams, agreed scope, fair pricing.",
       },
-      { property: "og:title", content: "Hexa Ventures — crafted with intent" },
+      { property: "og:title", content: "Hexa Ventures — NDIS & property services across Australia" },
       {
         property: "og:description",
         content:
-          "A diversified Australian company built on honest work and long-term commitment.",
+          "Six connected service pillars built deliberately — honest work, clear accountability, long-term commitment.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -21,268 +22,322 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const MAIL = "mailto:info@hexaventures.com.au";
+const MAIL = "mailto:admin@hexaventures.com.au";
 
 type Pillar = {
-  number: string;
-  title: string;
+  n: string;
   status: string;
+  title: string;
   blurb: string;
 };
 
 const pillars: Pillar[] = [
   {
-    number: "01",
-    title: "NDIS & property maintenance",
-    status: "active",
+    n: "01",
+    status: "Active",
+    title: "NDIS & Property Maintenance",
     blurb:
-      "Practical, dependable support and property care — delivered by people who take responsibility for the work.",
+      "NDIS-related support alongside rental property maintenance — lawn mowing, gardening and general external works delivered by accountable, fairly-remunerated teams.",
   },
   {
-    number: "02",
-    title: "bond cleaning consultancy",
-    status: "building",
+    n: "02",
+    status: "Building",
+    title: "Bond Cleaning Consultancy",
     blurb:
-      "The trusted bridge between residents, property managers, and the cleaners who get the job done.",
+      "The trusted bridge between residents, property managers and cleaning providers — coordinating outsourced bond cleans across residential communities.",
   },
   {
-    number: "03",
-    title: "real estate services",
-    status: "in qualification",
+    n: "03",
+    status: "In qualification",
+    title: "Real Estate Services",
     blurb:
-      "A long-term commitment to property — being built properly, from the ground up.",
+      "With two directors completing real estate qualifications, we are preparing to deliver acquisition, sales, property management and consulting under one roof.",
   },
   {
-    number: "04",
-    title: "mortgage broking",
-    status: "in exploration",
+    n: "04",
+    status: "In exploration",
+    title: "Mortgage Broking",
     blurb:
-      "A natural next step — explored with the same care as everything else we do.",
+      "Actively evaluating the pathway to a mortgage broking licence — a natural complement to our future real estate operations.",
   },
   {
-    number: "05",
-    title: "education & training",
-    status: "in development",
+    n: "05",
+    status: "In development",
+    title: "Education & Training",
     blurb:
-      "Practical, accessible learning — facilitated with care, designed for real outcomes.",
+      "Facilitated learning — Diploma programs, Certificate IV courses and community-based vocational training. Initial course design is underway.",
   },
   {
-    number: "06",
-    title: "diversified investment",
-    status: "strategy",
-    blurb: "The thinking that holds the whole company together.",
+    n: "06",
+    status: "Strategy",
+    title: "Diversified Investment",
+    blurb:
+      "A deliberately diversified model — multiple service and investment streams structured for resilience, accountability and long-term value creation.",
   },
+];
+
+const standards = [
+  { k: "Honest work.", v: "We say what we do, do what we said, and record it properly." },
+  { k: "Clear accountability.", v: "Named teams, agreed scope, fair pricing — across every pillar." },
+  { k: "Long-term commitment.", v: "Built deliberately to serve communities steadily, not to chase moments." },
+];
+
+const tracks = [
+  { s: "Active", t: "NDIS services & property maintenance operations being established" },
+  { s: "Building", t: "Bond cleaning consultancy — partnering with cleaners and property managers" },
+  { s: "In qualification", t: "Two directors completing real estate licence requirements" },
+  { s: "Exploring", t: "Mortgage broking licence pathway under evaluation" },
+  { s: "In design", t: "Diploma, Certificate IV and community vocational courses" },
+];
+
+const places = [
+  { e: "Heritage", t: "Kerala", s: "South India" },
+  { e: "Based in", t: "Australia", s: "Home today" },
+  { e: "Lived & worked", t: "United Kingdom", s: "Years on the ground" },
+  { e: "Lived & worked", t: "Singapore", s: "Years on the ground" },
+  { e: "Lived & worked", t: "Muscat", s: "Years on the ground" },
 ];
 
 function Logo() {
   return (
     <a href="#top" className="inline-flex items-center gap-2.5">
       <svg width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden>
-        <path
-          d="M11 1L20.5 6.5V17.5L11 23L1.5 17.5V6.5L11 1Z"
-          stroke="currentColor"
-          strokeWidth="1.25"
-        />
+        <path d="M11 1L20.5 6.5V17.5L11 23L1.5 17.5V6.5L11 1Z" stroke="currentColor" strokeWidth="1.25" />
       </svg>
-      <span className="font-display text-base tracking-tight">hexa ventures</span>
+      <span className="display text-base tracking-tight lowercase">hexa ventures</span>
     </a>
   );
 }
 
-function PillarRow({ p }: { p: Pillar }) {
-  const handleMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-    e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
-  };
+function Nav() {
+  const [open, setOpen] = useState(false);
+  const links = [
+    { href: "#pillars", label: "pillars" },
+    { href: "#vision", label: "vision" },
+    { href: "#founders", label: "founders" },
+    { href: "#contact", label: "contact" },
+  ];
   return (
-    <li>
-      <a
-        href={MAIL}
-        onMouseMove={handleMove}
-        className="group relative block overflow-hidden border-b border-hairline py-8 sm:py-10"
-        style={{ ["--mx" as string]: "50%", ["--my" as string]: "50%" }}
-      >
-        {/* cursor spotlight */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          style={{
-            background:
-              "radial-gradient(220px circle at var(--mx) var(--my), oklch(1 0 0 / 0.10), transparent 70%)",
-          }}
-        />
-        <div className="relative grid grid-cols-[auto_1fr_auto] items-center gap-6 sm:gap-10">
-          <span className="font-display text-sm tabular-nums text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:text-base">
-            {p.number}
-          </span>
-          <div className="min-w-0">
-            <h3 className="font-display text-2xl leading-tight tracking-tight text-foreground/80 transition-all duration-500 ease-out group-hover:translate-x-2 group-hover:text-foreground sm:text-4xl md:text-5xl">
-              {p.title}
-            </h3>
-            <p className="mt-2 max-w-2xl truncate text-xs text-muted-foreground sm:text-sm">
-              {p.blurb}
-            </p>
-          </div>
-          <div className="flex items-center gap-4 sm:gap-6">
-            <span className="hidden text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:inline">
-              {p.status}
-            </span>
-            <span
-              aria-hidden
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground group-hover:text-background sm:h-11 sm:w-11"
-            >
-              <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-            </span>
+    <header className="fixed inset-x-0 top-0 z-40 backdrop-blur-md bg-background/70 border-b border-hairline">
+      <div className="container-x flex h-[72px] items-center justify-between">
+        <Logo />
+        <nav className="hidden md:flex items-center gap-10 text-sm lowercase text-muted-foreground">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="hover:text-foreground transition-colors">{l.label}</a>
+          ))}
+        </nav>
+        <a href={MAIL} className="hidden md:inline-flex btn-base btn-ghost lowercase text-xs">
+          get in touch <span aria-hidden>→</span>
+        </a>
+        <button
+          aria-label="Menu"
+          className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-full border border-hairline"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span className="block w-4 h-px bg-foreground relative before:content-[''] before:absolute before:-top-1.5 before:left-0 before:w-4 before:h-px before:bg-foreground after:content-[''] after:absolute after:top-1.5 after:left-0 after:w-4 after:h-px after:bg-foreground" />
+        </button>
+      </div>
+      {open && (
+        <div className="md:hidden border-t border-hairline bg-background">
+          <div className="container-x py-6 flex flex-col gap-5 text-sm lowercase">
+            {links.map((l) => (
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground">{l.label}</a>
+            ))}
+            <a href={MAIL} className="btn-base btn-light lowercase mt-2 self-start text-xs">get in touch →</a>
           </div>
         </div>
-      </a>
-    </li>
+      )}
+    </header>
   );
 }
 
 function Index() {
   return (
-    <div id="top" className="min-h-screen bg-background text-foreground">
-      {/* Nav */}
-      <header className="absolute inset-x-0 top-0 z-40">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-6 sm:px-10 sm:py-8">
-          <Logo />
-          <a
-            href={MAIL}
-            className="group inline-flex items-center gap-2 rounded-sm border border-border px-4 py-2 text-xs tracking-wide text-foreground/90 backdrop-blur transition-colors hover:bg-foreground hover:text-background"
-          >
-            get in touch
-            <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
-          </a>
-        </div>
-      </header>
-
-      {/* Hero */}
-      <section className="relative flex min-h-[100svh] items-center overflow-hidden">
-        {/* ambient gradient */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-70"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 40%, oklch(0.28 0 0) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-hairline"
-        />
-        <div className="relative mx-auto w-full max-w-6xl px-5 py-32 text-center sm:px-10 sm:py-40">
-          <div className="mx-auto mb-8 inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-            <span className="h-px w-8 bg-muted-foreground/60" />
-            a diversified australian company
-            <span className="h-px w-8 bg-muted-foreground/60" />
+    <div id="top" className="min-h-screen flex flex-col bg-background text-foreground">
+      <Nav />
+      <main className="flex-1 pt-[72px]">
+        {/* Hero */}
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0 hex-pattern opacity-60 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background pointer-events-none" />
+          <div className="container-x relative pt-28 md:pt-40 pb-32 md:pb-44 text-center">
+            <div className="inline-flex items-center gap-4 text-[11px] tracking-[0.25em] uppercase text-muted-foreground mb-10">
+              <span className="hairline w-10" />
+              NDIS &amp; property services · Australia
+              <span className="hairline w-10" />
+            </div>
+            <h1 className="display text-[clamp(48px,9vw,140px)] leading-[0.95] lowercase">
+              we show up, do the work,<br />
+              and <span className="display-italic">record it properly.</span>
+            </h1>
+            <p className="mt-10 max-w-2xl mx-auto text-base md:text-lg text-muted-foreground lowercase">
+              ndis support, property maintenance and bond cleaning across australia — named teams, agreed scope, fair pricing.
+            </p>
+            <div className="mt-12 flex flex-wrap justify-center gap-3">
+              <a href="#pillars" className="btn-base btn-light lowercase">explore the pillars ↓</a>
+              <a href="#vision" className="btn-base btn-ghost lowercase">our direction</a>
+            </div>
+            <dl className="mt-24 grid grid-cols-3 gap-6 max-w-2xl mx-auto">
+              <div className="text-center">
+                <dt className="display text-4xl md:text-5xl">6</dt>
+                <dd className="mt-3 eyebrow">Service pillars</dd>
+              </div>
+              <div className="text-center">
+                <dt className="display text-4xl md:text-5xl">Fixed</dt>
+                <dd className="mt-3 eyebrow">Scope agreed before we start</dd>
+              </div>
+              <div className="text-center">
+                <dt className="display text-4xl md:text-5xl">Every job</dt>
+                <dd className="mt-3 eyebrow">Documented &amp; accountable</dd>
+              </div>
+            </dl>
           </div>
-          <h1 className="font-display text-5xl leading-[0.95] tracking-tight text-foreground sm:text-7xl md:text-[8rem]">
-            crafted with
-            <br />
-            <span className="italic">intent.</span>
-          </h1>
-          <p className="mx-auto mt-10 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            six pillars. one standard. honest work, clear accountability,
-            and a long-term commitment to the communities we serve.
-          </p>
-          <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a
-              href="#pillars"
-              className="group inline-flex items-center gap-3 rounded-sm bg-foreground px-6 py-3.5 text-xs tracking-wide text-background transition-transform hover:-translate-y-0.5"
-            >
-              explore the pillars
-              <span aria-hidden className="transition-transform group-hover:translate-y-0.5">↓</span>
-            </a>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Pillars — CRED-style hover list */}
-      <section id="pillars" className="border-t border-hairline">
-        <div className="mx-auto max-w-7xl px-5 sm:px-10">
-          <div className="grid gap-6 py-20 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:py-28">
-            <h2 className="font-display text-4xl leading-[0.95] tracking-tight sm:text-6xl">
-              built on six
-              <br />
-              <span className="text-muted-foreground italic">connected pillars.</span>
+        {/* Pillars */}
+        <section id="pillars" className="border-t border-border bg-surface">
+          <div className="container-x py-24 md:py-32">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+              <div>
+                <div className="eyebrow mb-6">What we do</div>
+                <h2 className="display text-[clamp(34px,5vw,60px)] max-w-2xl">
+                  Built on six <span className="display-italic">connected</span> pillars.
+                </h2>
+              </div>
+              <p className="text-muted-foreground max-w-sm">
+                A multi-stream business, structured so each piece strengthens the others — active operations, qualifications in progress, and future-focused pathways.
+              </p>
+            </div>
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {pillars.map((p) => (
+                <article key={p.n} className="pillar-card p-8 flex flex-col">
+                  <div className="flex items-start justify-between mb-12">
+                    <span className="display text-2xl text-muted-foreground">{p.n}</span>
+                    <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground px-2.5 py-1 rounded-full border border-hairline">
+                      {p.status}
+                    </span>
+                  </div>
+                  <h3 className="display text-2xl mb-3">{p.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">{p.blurb}</p>
+                  <a href={MAIL} className="mt-8 text-sm lowercase inline-flex items-center gap-2 text-foreground hover:gap-3 transition-all">
+                    enquire <span aria-hidden>→</span>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Vision */}
+        <section id="vision" className="border-t border-border">
+          <div className="narrow-x py-24 md:py-32">
+            <div className="eyebrow mb-6">Strategic direction</div>
+            <h2 className="display text-[clamp(34px,5vw,60px)]">
+              A diversified business model with multiple service and{" "}
+              <span className="display-italic">investment streams.</span>
             </h2>
-            <p className="max-w-xs text-sm text-muted-foreground">
-              a multi-stream business, structured so each piece strengthens the others.
+            <p className="mt-8 text-lg text-muted-foreground max-w-3xl">
+              Hexa Ventures Pty Ltd is being built deliberately — each pillar chosen to reinforce the others, each operation structured with accountability, transparency and long-term focus. From everyday property care to real estate and education, our directors are establishing the foundations of a company that will serve Australian communities for years to come.
             </p>
           </div>
+        </section>
 
-          <ul className="border-t border-hairline">
-            {pillars.map((p) => (
-              <PillarRow key={p.number} p={p} />
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Approach */}
-      <section className="border-t border-hairline">
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-10 sm:py-28">
-          <div className="mb-12 text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-            the standard
+        {/* Standard */}
+        <section className="border-t border-border bg-surface">
+          <div className="container-x py-24 md:py-32">
+            <div className="eyebrow mb-10 text-center">The standard</div>
+            <div className="grid md:grid-cols-3 gap-px bg-hairline rounded-2xl overflow-hidden border border-hairline">
+              {standards.map((s) => (
+                <div key={s.k} className="spotlight bg-surface p-10">
+                  <h3 className="display text-3xl mb-4 lowercase">{s.k}</h3>
+                  <p className="text-muted-foreground">{s.v}</p>
+                </div>
+              ))}
+            </div>
+            <ul className="mt-16 rounded-2xl overflow-hidden border border-hairline divide-y" style={{ borderColor: "var(--hairline)" }}>
+              {tracks.map((t) => (
+                <li key={t.s} className="flex flex-col sm:flex-row gap-2 sm:gap-8 px-6 py-5 bg-background">
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground sm:w-40 pt-1">{t.s}</span>
+                  <span className="text-foreground/90">{t.t}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="grid gap-12 md:grid-cols-3 md:gap-16">
-            {[
-              {
-                k: "honest work.",
-                v: "we say what we do, do what we said, and record it properly.",
-              },
-              {
-                k: "clear accountability.",
-                v: "named teams, agreed scope, fair pricing — across every pillar.",
-              },
-              {
-                k: "long-term commitment.",
-                v: "built deliberately to serve communities steadily, not chase moments.",
-              },
-            ].map((item) => (
-              <div key={item.k}>
-                <div className="mb-5 h-px w-10 bg-foreground" />
-                <h3 className="font-display text-2xl leading-tight sm:text-3xl">{item.k}</h3>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{item.v}</p>
+        </section>
+
+        {/* Founders */}
+        <section id="founders" className="border-t border-border">
+          <div className="narrow-x py-24 md:py-32">
+            <div className="eyebrow mb-6">The people behind it</div>
+            <h2 className="display text-[clamp(34px,5vw,60px)]">
+              Built by people who know what it means to{" "}
+              <span className="display-italic">start somewhere new.</span>
+            </h2>
+            <p className="mt-8 display text-2xl md:text-3xl font-light leading-snug max-w-3xl">
+              Wherever you come from, you are welcome here. The founders of Hexa Ventures have lived that journey themselves — and they built this company to serve every community, from every background.
+            </p>
+            <div className="mt-8 text-lg text-muted-foreground space-y-5 max-w-2xl">
+              <p>
+                Between them, the founding team has made a home in many places. With roots in Kerala, in South India, and years lived and worked across Australia, the United Kingdom, Singapore and Muscat, they have learned that trust is built the same way everywhere — through honesty, fair work, and genuinely seeing the person in front of you.
+              </p>
+              <p>
+                That history shapes how Hexa Ventures operates today. Having been newcomers themselves, the founders understand what it takes to find your feet in an unfamiliar place — and they bring that same care and respect to everyone they serve, whatever your culture, faith or origin.
+              </p>
+            </div>
+            <div className="mt-14 grid gap-px bg-hairline border border-hairline rounded-2xl overflow-hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+              {places.map((p, i) => (
+                <div key={i} className="spotlight bg-background p-7">
+                  <div className="eyebrow">{p.e}</div>
+                  <div className="mt-2 display text-xl">{p.t}</div>
+                  <div className="mt-1 text-sm text-muted-foreground">{p.s}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="border-t border-border bg-surface">
+          <div className="narrow-x py-24 md:py-32">
+            <div className="spotlight relative rounded-3xl border border-hairline bg-background p-10 md:p-16 overflow-hidden">
+              <div className="absolute inset-0 hex-pattern opacity-40 pointer-events-none" />
+              <div className="relative">
+                <div className="eyebrow mb-6">Get in touch</div>
+                <h2 className="display text-[clamp(34px,5vw,60px)]">
+                  Start the <span className="display-italic">conversation.</span>
+                </h2>
+                <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
+                  Whether you need a service today, want to partner, or are exploring an opportunity, our directors are happy to talk.
+                </p>
+                <div className="mt-12 grid sm:grid-cols-3 gap-8">
+                  <div>
+                    <div className="eyebrow">Email</div>
+                    <a href={MAIL} className="mt-1 block text-foreground hover:text-accent transition-colors">
+                      admin@hexaventures.com.au
+                    </a>
+                  </div>
+                  <div>
+                    <div className="eyebrow">Phone</div>
+                    <div className="mt-1 text-foreground">Available on request</div>
+                  </div>
+                  <div>
+                    <div className="eyebrow">Based in</div>
+                    <div className="mt-1 text-foreground">Australia</div>
+                  </div>
+                </div>
+                <div className="mt-12">
+                  <a href={MAIL} className="btn-base btn-light lowercase">start a conversation →</a>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* Contact */}
-      <section id="contact" className="border-t border-hairline">
-        <div className="mx-auto max-w-7xl px-5 py-24 text-center sm:px-10 sm:py-36">
-          <div className="mb-8 text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-            get in touch
-          </div>
-          <h2 className="font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl md:text-8xl">
-            start the
-            <br />
-            <span className="italic text-muted-foreground">conversation.</span>
-          </h2>
-          <p className="mx-auto mt-8 max-w-md text-sm leading-relaxed text-muted-foreground">
-            whether you need a service today or want to understand where hexa ventures is heading,
-            our directors are happy to talk.
-          </p>
-          <a
-            href={MAIL}
-            className="group mt-12 inline-flex items-center gap-3 rounded-sm bg-foreground px-7 py-4 text-xs tracking-wide text-background transition-transform hover:-translate-y-0.5"
-          >
-            info@hexaventures.com.au
-            <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
-          </a>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-hairline">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 px-5 py-10 text-xs text-muted-foreground sm:flex-row sm:items-center sm:px-10">
+      <footer className="border-t border-border">
+        <div className="container-x flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 py-10 text-xs text-muted-foreground">
           <Logo />
-          <span>© {new Date().getFullYear()} hexa ventures. all rights reserved.</span>
+          <span className="lowercase">© {new Date().getFullYear()} hexa ventures pty ltd. all rights reserved.</span>
         </div>
       </footer>
     </div>
