@@ -115,14 +115,14 @@
 @utility btn-light {
   background: var(--color-foreground);
   color: var(--color-background);
+  &:hover { transform: translateY(-1px); }
 }
-@utility btn-light:hover { transform: translateY(-1px); }
 @utility btn-ghost {
   background: transparent;
   color: var(--color-foreground);
   border: 1px solid var(--color-hairline);
+  &:hover { border-color: var(--color-foreground); }
 }
-@utility btn-ghost:hover { border-color: var(--color-foreground); }
 
 @utility pillar-card {
   position: relative;
@@ -131,18 +131,16 @@
   background: var(--color-background);
   transition: border-color 0.4s ease, transform 0.4s ease;
   overflow: hidden;
-}
-@utility pillar-card:hover {
-  border-color: oklch(1 0 0 / 0.25);
-  transform: translateY(-2px);
+  &:hover {
+    border-color: oklch(1 0 0 / 0.25);
+    transform: translateY(-2px);
+  }
 }
 
 @utility spotlight {
   position: relative;
   transition: background-color 0.4s ease;
-}
-@utility spotlight:hover {
-  background-color: oklch(1 0 0 / 0.02);
+  &:hover { background-color: oklch(1 0 0 / 0.02); }
 }
 
 @utility hex-pattern {
