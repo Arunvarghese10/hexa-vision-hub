@@ -1,5 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import logo from "@/assets/hexa-logo.jpeg.asset.json";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -100,14 +102,12 @@ const places = [
 
 function Logo() {
   return (
-    <a href="#top" className="inline-flex items-center gap-2.5">
-      <svg width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden>
-        <path d="M11 1L20.5 6.5V17.5L11 23L1.5 17.5V6.5L11 1Z" stroke="currentColor" strokeWidth="1.25" />
-      </svg>
-      <span className="display text-base tracking-tight lowercase">hexa ventures</span>
+    <a href="#top" className="inline-flex items-center gap-3">
+      <img src={logo.url} alt="Hexa Ventures" className="h-8 w-auto invert" />
     </a>
   );
 }
+
 
 function Nav() {
   const [open, setOpen] = useState(false);
@@ -335,11 +335,21 @@ function Index() {
       </main>
 
       <footer className="border-t border-border">
-        <div className="container-x flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 py-10 text-xs text-muted-foreground">
-          <Logo />
-          <span className="lowercase">© {new Date().getFullYear()} hexa ventures pty ltd. all rights reserved.</span>
+        <div className="container-x py-10 flex flex-col gap-6 text-xs text-muted-foreground">
+          <div className="flex flex-wrap gap-x-8 gap-y-3 lowercase">
+            <Link to="/privacy-policy" className="hover:text-foreground transition-colors">privacy policy</Link>
+            <Link to="/terms-of-use" className="hover:text-foreground transition-colors">terms of use</Link>
+            <Link to="/refund-policy" className="hover:text-foreground transition-colors">refund policy</Link>
+            <Link to="/complaint-policy" className="hover:text-foreground transition-colors">complaint policy</Link>
+            <a href={MAIL} className="hover:text-foreground transition-colors">admin@hexaventures.com.au</a>
+          </div>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <Logo />
+            <span className="lowercase">© {new Date().getFullYear()} hexa ventures pty ltd. all rights reserved.</span>
+          </div>
         </div>
       </footer>
+
     </div>
   );
 }
