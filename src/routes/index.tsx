@@ -1,5 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import logo from "@/assets/hexa-logo.jpeg.asset.json";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -100,14 +102,12 @@ const places = [
 
 function Logo() {
   return (
-    <a href="#top" className="inline-flex items-center gap-2.5">
-      <svg width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden>
-        <path d="M11 1L20.5 6.5V17.5L11 23L1.5 17.5V6.5L11 1Z" stroke="currentColor" strokeWidth="1.25" />
-      </svg>
-      <span className="display text-base tracking-tight lowercase">hexa ventures</span>
+    <a href="#top" className="inline-flex items-center gap-3">
+      <img src={logo.url} alt="Hexa Ventures" className="h-8 w-auto invert" />
     </a>
   );
 }
+
 
 function Nav() {
   const [open, setOpen] = useState(false);
