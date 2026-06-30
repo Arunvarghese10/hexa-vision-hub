@@ -335,11 +335,21 @@ function Index() {
       </main>
 
       <footer className="border-t border-border">
-        <div className="container-x flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 py-10 text-xs text-muted-foreground">
-          <Logo />
-          <span className="lowercase">© {new Date().getFullYear()} hexa ventures pty ltd. all rights reserved.</span>
+        <div className="container-x py-10 flex flex-col gap-6 text-xs text-muted-foreground">
+          <div className="flex flex-wrap gap-x-8 gap-y-3 lowercase">
+            <Link to="/privacy-policy" className="hover:text-foreground transition-colors">privacy policy</Link>
+            <Link to="/terms-of-use" className="hover:text-foreground transition-colors">terms of use</Link>
+            <Link to="/refund-policy" className="hover:text-foreground transition-colors">refund policy</Link>
+            <Link to="/complaint-policy" className="hover:text-foreground transition-colors">complaint policy</Link>
+            <a href={MAIL} className="hover:text-foreground transition-colors">admin@hexaventures.com.au</a>
+          </div>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <Logo />
+            <span className="lowercase">© {new Date().getFullYear()} hexa ventures pty ltd. all rights reserved.</span>
+          </div>
         </div>
       </footer>
+
     </div>
   );
 }
