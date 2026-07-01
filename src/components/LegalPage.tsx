@@ -15,7 +15,7 @@ export const MAIL = "mailto:admin@hexaventures.com.au";
 function Logo() {
   return (
     <Link to="/" className="inline-flex items-center gap-3">
-      <img src={logo.url} alt="Hexa Ventures" className="h-8 w-auto invert" />
+      <img src={logo.url} alt="Hexa Ventures" className="h-8 w-auto" style={{ mixBlendMode: "screen" }} />
     </Link>
   );
 }
@@ -97,17 +97,11 @@ export function LegalPage({
       <main className="flex-1 pt-[72px]">
         <section className="border-b border-border bg-surface">
           <div className="narrow-x py-12 md:py-16">
-            <Breadcrumb className="mb-8">
+              <Breadcrumb className="mb-8">
               <BreadcrumbList className="lowercase text-xs tracking-wider">
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
                     <Link to="/" className="hover:text-foreground">home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/" className="hover:text-foreground">legal</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />

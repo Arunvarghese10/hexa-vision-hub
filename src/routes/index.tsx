@@ -103,7 +103,7 @@ const places = [
 function Logo() {
   return (
     <a href="#top" className="inline-flex items-center gap-3">
-      <img src={logo.url} alt="Hexa Ventures" className="h-8 w-auto invert" />
+      <img src={logo.url} alt="Hexa Ventures" className="h-8 w-auto" style={{ mixBlendMode: "screen" }} />
     </a>
   );
 }
