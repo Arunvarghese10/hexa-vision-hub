@@ -15,7 +15,7 @@ export const MAIL = "mailto:admin@hexaventures.com.au";
 function Logo() {
   return (
     <Link to="/" className="inline-flex items-center gap-3">
-      <img src={logo.url} alt="Hexa Ventures" className="h-8 w-auto invert" />
+      <img src={logo.url} alt="Hexa Ventures" className="h-8 w-auto" style={{ mixBlendMode: "screen" }} />
     </Link>
   );
 }
