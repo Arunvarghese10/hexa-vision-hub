@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { type ReactNode, useState } from "react";
+import logo from "@/assets/hexa-logo.jpeg.asset.json";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,12 +14,13 @@ export const MAIL = "mailto:admin@hexaventures.com.au";
 
 function Logo() {
   return (
-    <Link to="/" className="inline-flex items-center gap-2.5 text-foreground">
-      <svg viewBox="0 0 32 32" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-        <polygon points="16,3 28,10 28,22 16,29 4,22 4,10" />
-        <polygon points="16,9 23,13 23,19 16,23 9,19 9,13" />
-      </svg>
-      <span className="display text-base tracking-[0.28em] uppercase">Hexa Ventures</span>
+    <Link to="/" className="inline-flex items-center">
+      <img
+        src={logo.url}
+        alt="Hexa Ventures"
+        className="h-8 w-auto"
+        style={{ filter: "invert(1)", mixBlendMode: "screen" }}
+      />
     </Link>
   );
 }
