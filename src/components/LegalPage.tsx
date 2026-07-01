@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { type ReactNode, useState } from "react";
-import logo from "@/assets/hexa-logo.json";
+import logo from "@/assets/hexa-logo.jpeg";
 import {
   Breadcrumb,
   BreadcrumbItem,
