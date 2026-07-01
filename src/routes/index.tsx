@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import logo from "@/assets/hexa-logo.jpeg.asset.json";
+import logo from "@/assets/hexa-logo.jpeg";
 
 
 
@@ -106,7 +106,7 @@ function Logo() {
   return (
     <a href="#top" className="inline-flex items-center">
       <img
-        src={logo.url}
+        src={logo}
         alt="Hexa Ventures"
         className="h-8 w-auto"
         style={{ filter: "invert(1)", mixBlendMode: "screen" }}
