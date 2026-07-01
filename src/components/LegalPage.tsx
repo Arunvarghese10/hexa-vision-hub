@@ -97,17 +97,11 @@ export function LegalPage({
       <main className="flex-1 pt-[72px]">
         <section className="border-b border-border bg-surface">
           <div className="narrow-x py-12 md:py-16">
-            <Breadcrumb className="mb-8">
+              <Breadcrumb className="mb-8">
               <BreadcrumbList className="lowercase text-xs tracking-wider">
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
                     <Link to="/" className="hover:text-foreground">home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/" className="hover:text-foreground">legal</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
