@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { type ReactNode, useState } from "react";
-import logo from "@/assets/hexa-logo.jpeg.asset.json";
+import logo from "@/assets/hexa-logo.json";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,7 +16,7 @@ function Logo() {
   return (
     <Link to="/" className="inline-flex items-center">
       <img
-        src={logo.url}
+        src={logo}
         alt="Hexa Ventures"
         className="h-8 w-auto"
         style={{ filter: "invert(1)", mixBlendMode: "screen" }}
