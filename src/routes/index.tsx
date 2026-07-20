@@ -419,7 +419,20 @@ function Index() {
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <Logo />
-            <span className="lowercase">© {new Date().getFullYear()} hexa ventures pty ltd. all rights reserved.</span>
+            <div className="flex items-center gap-5">
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Hexa Ventures on LinkedIn"
+                className="inline-flex items-center justify-center h-9 w-9 rounded-full border border-hairline text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v15H.22V8zm7.5 0h4.37v2.05h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V23h-4.56v-6.63c0-1.58-.03-3.62-2.21-3.62-2.21 0-2.55 1.72-2.55 3.5V23H7.72V8z" />
+                </svg>
+              </a>
+              <span className="lowercase">© {new Date().getFullYear()} hexa ventures pty ltd. all rights reserved.</span>
+            </div>
           </div>
         </div>
       </footer>
