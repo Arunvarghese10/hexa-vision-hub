@@ -1,6 +1,30 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "@/assets/hexa-logo.jpeg";
+
+const LINKEDIN_URL = "https://www.linkedin.com/company/hexa-ventures-pty-ltd/?viewAsMember=true";
+
+
+function useScrollSpy(ids: string[]) {
+  const [active, setActive] = useState<string>(ids[0] ?? "");
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+      const pos = window.scrollY + 120;
+      let current = ids[0] ?? "";
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= pos) current = id;
+      }
+      setActive(current);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [ids]);
+  return { active, scrolled };
+}
 
 
 
@@ -119,18 +143,38 @@ function Logo() {
 function Nav() {
   const [open, setOpen] = useState(false);
   const links = [
-    { href: "#pillars", label: "pillars" },
-    { href: "#vision", label: "vision" },
-    { href: "#founders", label: "founders" },
-    { href: "#contact", label: "contact" },
+    { href: "#pillars", id: "pillars", label: "pillars" },
+    { href: "#vision", id: "vision", label: "vision" },
+    { href: "#founders", id: "founders", label: "founders" },
+    { href: "#contact", id: "contact", label: "contact" },
   ];
+  const { active, scrolled } = useScrollSpy(links.map((l) => l.id));
   return (
-    <header className="fixed inset-x-0 top-0 z-40 backdrop-blur-md bg-background/70 border-b border-hairline">
+    <header
+      className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 border-b ${
+        scrolled
+          ? "backdrop-blur-xl bg-background/60 border-hairline shadow-[0_1px_0_0_rgba(255,255,255,0.04)]"
+          : "backdrop-blur-md bg-background/30 border-transparent"
+      }`}
+    >
       <div className="container-x flex h-[72px] items-center justify-between">
         <Logo />
         <nav className="hidden md:flex items-center gap-10 text-sm lowercase text-muted-foreground">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="hover:text-foreground transition-colors">{l.label}</a>
+            <a
+              key={l.href}
+              href={l.href}
+              className={`relative transition-colors ${
+                active === l.id ? "text-foreground" : "hover:text-foreground"
+              }`}
+            >
+              {l.label}
+              <span
+                className={`absolute -bottom-1 left-0 h-px bg-foreground transition-all duration-300 ${
+                  active === l.id ? "w-full opacity-100" : "w-0 opacity-0"
+                }`}
+              />
+            </a>
           ))}
         </nav>
         <a href={MAIL} className="hidden md:inline-flex btn-base btn-ghost lowercase text-xs">
@@ -145,7 +189,7 @@ function Nav() {
         </button>
       </div>
       {open && (
-        <div className="md:hidden border-t border-hairline bg-background">
+        <div className="md:hidden border-t border-hairline bg-background/90 backdrop-blur-xl">
           <div className="container-x py-6 flex flex-col gap-5 text-sm lowercase">
             {links.map((l) => (
               <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground">{l.label}</a>
@@ -352,7 +396,20 @@ function Index() {
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <Logo />
-            <span className="lowercase">© {new Date().getFullYear()} hexa ventures pty ltd. all rights reserved.</span>
+            <div className="flex items-center gap-5">
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Hexa Ventures on LinkedIn"
+                className="inline-flex items-center justify-center h-9 w-9 rounded-full border border-hairline text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v15H.22V8zm7.5 0h4.37v2.05h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V23h-4.56v-6.63c0-1.58-.03-3.62-2.21-3.62-2.21 0-2.55 1.72-2.55 3.5V23H7.72V8z" />
+                </svg>
+              </a>
+              <span className="lowercase">© {new Date().getFullYear()} hexa ventures pty ltd. all rights reserved.</span>
+            </div>
           </div>
         </div>
       </footer>

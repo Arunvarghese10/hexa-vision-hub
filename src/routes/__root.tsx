@@ -120,11 +120,35 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function CursorGlow() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(hover: none)").matches) return;
+    const el = document.createElement("div");
+    el.className = "cursor-glow";
+    document.body.appendChild(el);
+    const move = (e: MouseEvent) => {
+      el.style.transform = `translate3d(${e.clientX - 200}px, ${e.clientY - 200}px, 0)`;
+      el.style.opacity = "1";
+    };
+    const hide = () => (el.style.opacity = "0");
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseleave", hide);
+    return () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseleave", hide);
+      el.remove();
+    };
+  }, []);
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
+      <CursorGlow />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
