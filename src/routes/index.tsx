@@ -165,18 +165,38 @@ function Logo() {
 function Nav() {
   const [open, setOpen] = useState(false);
   const links = [
-    { href: "#pillars", label: "pillars" },
-    { href: "#vision", label: "vision" },
-    { href: "#founders", label: "founders" },
-    { href: "#contact", label: "contact" },
+    { href: "#pillars", id: "pillars", label: "pillars" },
+    { href: "#vision", id: "vision", label: "vision" },
+    { href: "#founders", id: "founders", label: "founders" },
+    { href: "#contact", id: "contact", label: "contact" },
   ];
+  const { active, scrolled } = useScrollSpy(links.map((l) => l.id));
   return (
-    <header className="fixed inset-x-0 top-0 z-40 backdrop-blur-md bg-background/70 border-b border-hairline">
+    <header
+      className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 border-b ${
+        scrolled
+          ? "backdrop-blur-xl bg-background/60 border-hairline shadow-[0_1px_0_0_rgba(255,255,255,0.04)]"
+          : "backdrop-blur-md bg-background/30 border-transparent"
+      }`}
+    >
       <div className="container-x flex h-[72px] items-center justify-between">
         <Logo />
         <nav className="hidden md:flex items-center gap-10 text-sm lowercase text-muted-foreground">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="hover:text-foreground transition-colors">{l.label}</a>
+            <a
+              key={l.href}
+              href={l.href}
+              className={`relative transition-colors ${
+                active === l.id ? "text-foreground" : "hover:text-foreground"
+              }`}
+            >
+              {l.label}
+              <span
+                className={`absolute -bottom-1 left-0 h-px bg-foreground transition-all duration-300 ${
+                  active === l.id ? "w-full opacity-100" : "w-0 opacity-0"
+                }`}
+              />
+            </a>
           ))}
         </nav>
         <a href={MAIL} className="hidden md:inline-flex btn-base btn-ghost lowercase text-xs">
@@ -191,7 +211,7 @@ function Nav() {
         </button>
       </div>
       {open && (
-        <div className="md:hidden border-t border-hairline bg-background">
+        <div className="md:hidden border-t border-hairline bg-background/90 backdrop-blur-xl">
           <div className="container-x py-6 flex flex-col gap-5 text-sm lowercase">
             {links.map((l) => (
               <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground">{l.label}</a>
@@ -207,6 +227,7 @@ function Nav() {
 function Index() {
   return (
     <div id="top" className="min-h-screen flex flex-col bg-background text-foreground">
+      <CursorGlow />
       <Nav />
       <main className="flex-1 pt-[72px]">
         {/* Hero */}
