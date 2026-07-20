@@ -205,7 +205,6 @@ function Nav() {
 function Index() {
   return (
     <div id="top" className="min-h-screen flex flex-col bg-background text-foreground">
-      <CursorGlow />
       <Nav />
       <main className="flex-1 pt-[72px]">
         {/* Hero */}
