@@ -4,28 +4,6 @@ import logo from "@/assets/hexa-logo.jpeg";
 
 const LINKEDIN_URL = "https://www.linkedin.com/company/hexa-ventures-pty-ltd/?viewAsMember=true";
 
-function CursorGlow() {
-  useEffect(() => {
-    const el = document.createElement("div");
-    el.className = "cursor-glow";
-    document.body.appendChild(el);
-    const move = (e: MouseEvent) => {
-      el.style.transform = `translate3d(${e.clientX - 200}px, ${e.clientY - 200}px, 0)`;
-    };
-    const show = () => (el.style.opacity = "1");
-    const hide = () => (el.style.opacity = "0");
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseenter", show);
-    window.addEventListener("mouseleave", hide);
-    return () => {
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mouseenter", show);
-      window.removeEventListener("mouseleave", hide);
-      el.remove();
-    };
-  }, []);
-  return null;
-}
 
 function useScrollSpy(ids: string[]) {
   const [active, setActive] = useState<string>(ids[0] ?? "");
